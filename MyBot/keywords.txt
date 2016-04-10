@@ -1,0 +1,46 @@
+# Keywords for MyBot.h library for Arduino
+
+# Datatypes (Keyword 1)
+
+RedBotMotors				KEYWORD 1
+RedBotActions				KEYWORD 1
+
+
+# Methods and Functions
+
+Drive					KEYWORD 2
+Pivot					KEYWORD 2
+Slide					KEYWORD 2
+Turn 					KEYWORD 2
+Stop					KEYWORD 2
+Brake					KEYWORD 2
+DriveToLine				KEYWORD 2
+Rotate					KEYWORD 2
+
+
+# Constants (Literal 1)
+
+MotorFL					LITERAL 1
+MotorFR					LITERAL 1
+MotorBL					LITERAL 1
+MotorBR					LITERAL 1
+MinSpeed				LITERAL 1
+MaxSpeed				LITERAL 1
+LineSensorADD				LITERAL 1
+IDLE_STATE				LITERAL 1
+SENSOR_READ				LITERAL 1
+GO_FORWARD				LITERAL 1
+GO_LEFT					LITERAL 1
+GO_RIGHT				LITERAL 1
+ROTATE					LITERAL 1
+GO_BACKWARD				LITERAL 1
+TRIGGER_PIN_FRONT			LITERAL 1
+ECHO_PIN_FRONT				LITERAL 1
+TRIGGER_PIN_RIGHT			LITERAL 1
+ECHO_PIN_RIGHT				LITERAL 1
+TRIGGER_PIN_BACK			LITERAL 1
+ECHO_PIN_BACK				LITERAL 1
+TRIGGER_PIN_LEFT			LITERAL 1
+ECHO_PIN_LEFT				LITERAL 1
+SDA					LITERAL 1
+SCL					LITERAL 1
