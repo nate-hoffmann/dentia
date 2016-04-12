@@ -105,7 +105,8 @@ void MyBotAction::DriveToLocation(int dir, int spee, int Location)
     
 }
 
-void MyBotAction::Rotate(int dir, int Location)
+//Function works best when in the middle of the course.  Use follow lines and other functions to get to the center, then orient.
+void MyBotAction::Orient(int dir, int Orientation)
 {
     //Prepares bot class
     MyBotMap bottyMap;
@@ -141,7 +142,27 @@ void MyBotAction::Rotate(int dir, int Location)
                 
                 break;
             case CHECK_FINAL:
-                Check=bottyMap.CheckLocation(Location);
+                if (Orientation == RIGHT)
+                {
+                    if (abs(sonarFront.ping_median(10)/US_ROUNDTRIP_CM-RIGHT)<ERROR+5)
+                    {
+                        Check=0;
+                    }
+                }
+                if (Orientation == LEFT)
+                {
+                    if (abs(sonarFront.ping_median(10)/US_ROUNDTRIP_CM-LEFT)<ERROR+5)
+                    {
+                        Check=0;
+                    }
+                }
+                if (Orientation == FRONT)
+                {
+                    if (abs(sonarLeft.ping_median(10)/US_ROUNDTRIP_CM-FRONT)<ERROR+5)
+                    {
+                        Check=0;
+                    }
+                }
                 nextState=ROTATE;
                 break;
             default:
