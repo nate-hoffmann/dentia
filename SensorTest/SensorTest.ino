@@ -5,6 +5,8 @@
 Servo servo1;
 //Prepares bot class
 MyBotMotors bottyMots;
+MyBotMap  bottyMap;
+
 //Prepare Line Sensor to be read
 SensorBar FrontSensorBar(LineSensorFrontADD);// Instantiate the motor control object. This only needs to be done once.
 SensorBar BackSensorBar(LineSensorBackADD);
