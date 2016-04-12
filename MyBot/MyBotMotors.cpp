@@ -85,9 +85,9 @@ void MyBotMotors::Slide(int dir,int spee)
     if (dir == 1)
     {
     motorFL.run(BACKWARD);
-    motorFR.run(BACKWARD);
+    motorFR.run(FORWARD);
     motorBL.run(FORWARD);
-    motorBR.run(FORWARD);
+    motorBR.run(BACKWARD);
     motorFL.setSpeed(spee);
     motorFR.setSpeed(spee);
     motorBL.setSpeed(spee);
@@ -96,9 +96,9 @@ void MyBotMotors::Slide(int dir,int spee)
     else
     {
     motorFL.run(FORWARD);
-    motorFR.run(FORWARD);
+    motorFR.run(BACKWARD);
     motorBL.run(BACKWARD);
-    motorBR.run(BACKWARD);
+    motorBR.run(FORWARD);
     motorFL.setSpeed(spee);
     motorFR.setSpeed(spee);
     motorBL.setSpeed(spee);

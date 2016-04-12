@@ -9,94 +9,109 @@ MyBotAction::MyBotAction()
 }
 
 
-void MyBotAction::DriveToLine(int dir, int spee, uint8_t input)
+void MyBotAction::DriveToLocation(int dir, int spee, int Location)
 {
     //Prepares bot class
     MyBotMotors bottyMots;
+    MyBotMap bottyMap;
     //Prepare Line Sensor to be read
-    SensorBar mySensorBar(LineSensorADD);// Instantiate the motor control object. This only needs to be done once.
+    SensorBar FrontSensorBar(LineSensorFrontADD);// Instantiate the motor control object. This only needs to be
+    SensorBar BackSensorBar(LineSensorBackADD);
     //Prepares sonar sensors to be read
     NewPing sonarFront(TRIGGER_PIN_FRONT, ECHO_PIN_FRONT);
     NewPing sonarRight(TRIGGER_PIN_RIGHT, ECHO_PIN_RIGHT);
     NewPing sonarBack(TRIGGER_PIN_BACK, ECHO_PIN_BACK);
     NewPing sonarLeft(TRIGGER_PIN_LEFT, ECHO_PIN_LEFT);
-    
-    uint8_t stopper = 0;
+
     uint8_t state = GO_FORWARD;
-    while(stopper<input)
+    int Check=1;
+    int speed=spee;
+    while(Check==1)
     {
     uint8_t nextState = state;
+    speed = spee;
     switch (state) {
         case IDLE_STATE:
             //   motors.stop();       // Stops both motors
             bottyMots.Stop();
             nextState = SENSOR_READ;
             Serial.println("IDLE");
-            stopper ++;
+   
             break;
         case SENSOR_READ:
-            if (stopper < input)
-            {
-                if( mySensorBar.getDensity() < 3 )
+                if( FrontSensorBar.getDensity() < 3 )
                 {
                     nextState = GO_FORWARD;
-                    if( mySensorBar.getPosition() < -20 )
+                    if( FrontSensorBar.getPosition() < -30 )
                     {
                         nextState = GO_LEFT;
                     }
-                    if( mySensorBar.getPosition() > 20 )
+                    if( FrontSensorBar.getPosition() > 30 )
                     {
                         nextState = GO_RIGHT;
                     }
-                    Serial.println(mySensorBar.getPosition());
+                    Serial.println(FrontSensorBar.getPosition());
+                }
+                else if(FrontSensorBar.getDensity() == 0)
+                {
+                    nextState = CHECK_FINAL;
                 }
                 else
                 {
-                    nextState = IDLE_STATE;
+                    nextState = CHECK_FINAL;
                 }
-            }
-            else
-            {
-                nextState = IDLE_STATE;
-            }
-            Serial.println("READ");
+            //Speed Change
+                if (sonarFront.ping()/US_ROUNDTRIP_CM<60)
+                {
+                    speed = 190;
+                    if (sonarFront.ping()/US_ROUNDTRIP_CM<50)
+                    {
+                        speed = 180;
+                        if (sonarFront.ping()/US_ROUNDTRIP_CM<40)
+                        {
+                            speed = 170;
+                            if (sonarFront.ping()/US_ROUNDTRIP_CM<30)
+                            {
+                                speed = 160;
+                                if (sonarFront.ping()/US_ROUNDTRIP_CM<30)
+                                {
+                                    speed = 150;
+                                    if (sonarFront.ping()/US_ROUNDTRIP_CM<20)
+                                    {
+                                        speed = 140;
+                                        if (sonarFront.ping()/US_ROUNDTRIP_CM<10)
+                                        {
+                                            speed = 100;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             break;
         case GO_FORWARD:
-            //   driveBot(200);
-            if (stopper < input)
-            {
-                bottyMots.Drive(1,200);
+
+                bottyMots.Drive(dir,200);
                 nextState = SENSOR_READ;
-            }
-            else
-            {
-                nextState = IDLE_STATE;
-            }
+
             break;
         case GO_LEFT:
-            if (stopper < input)
-            {
-                //    turnBot(-.75);
-                bottyMots.Turn(0);
+
+                bottyMots.Slide(0,200);
                 nextState = SENSOR_READ;
-            }
-            else
-            {
-                nextState = IDLE_STATE;
-            }
+
             break;
         case GO_RIGHT:
-            //    turnBot(.75);
-            if (stopper < input)
-            {
-                bottyMots.Turn(1);
+
+                bottyMots.Slide(1,200);
                 nextState = SENSOR_READ;
-            }
-            else
-            {
-                nextState = IDLE_STATE;
-            }
-            Serial.println("RIGHT");
+
+            break;
+        case CHECK_FINAL:
+            bottyMots.Stop();
+            Check=bottyMap.CheckLocation(Location);
+            nextState=GO_FORWARD;
             break;
         default:
             //   motors.stop();       // Stops both motors
@@ -105,65 +120,56 @@ void MyBotAction::DriveToLine(int dir, int spee, uint8_t input)
     }
     state = nextState;
     }
+    return;
     
 }
 
-void MyBotAction::Rotate(int dir, int input)
+void MyBotAction::Rotate(int dir, int Location)
 {
     //Prepares bot class
+    MyBotMap bottyMap;
     MyBotMotors bottyMots;
     //Prepare Line Sensor to be read
-    SensorBar mySensorBar(LineSensorADD);// Instantiate the motor control object. This only needs to be done once.
+    SensorBar FrontSensorBar(LineSensorFrontADD);// Instantiate the motor control object. This only needs to be
+    SensorBar BackSensorBar(LineSensorBackADD);
     //Prepares sonar sensors to be read
     NewPing sonarFront(TRIGGER_PIN_FRONT, ECHO_PIN_FRONT);
     NewPing sonarRight(TRIGGER_PIN_RIGHT, ECHO_PIN_RIGHT);
     NewPing sonarBack(TRIGGER_PIN_BACK, ECHO_PIN_BACK);
     NewPing sonarLeft(TRIGGER_PIN_LEFT, ECHO_PIN_LEFT);
     
-    int count;
-    uint8_t stopper = 0;
+
+    int Check = 1;
     uint8_t state = ROTATE;
-    while (stopper < input)
+    while (Check == 1)
     {
         // put your main code here, to run repeatedly:
         
         uint8_t nextState = state;
         switch (state) {
             case IDLE_STATE:
-                if (count < 2){
-                    bottyMots.Pivot(dir,200);
-                    nextState = SENSOR_READ;
-                }
-                else{
-                    bottyMots.Brake();
-                    nextState = SENSOR_READ;
-                    stopper++;
-                }
+
+                bottyMots.Brake();
+                nextState = CHECK_FINAL;
                 break;
-            case SENSOR_READ:
-                if( mySensorBar.getDensity() < 4 || count > 10 )
-                {
-                    nextState = ROTATE;
-                }
-                else
-                {
-                    nextState=IDLE_STATE;
-                }
-                break;
+
             case ROTATE:
                 //   driveBot(200);
                 bottyMots.Pivot(dir,200);
-                nextState = SENSOR_READ;
+                nextState = CHECK_FINAL;
+                
+                break;
+            case CHECK_FINAL:
+                Check=bottyMap.CheckLocation(Location);
+                nextState=ROTATE;
                 break;
             default:
                 //   motors.stop();       // Stops both motors
                 bottyMots.Stop();
                 break;
         }
-        count++;
         state = nextState;
-        delay(100);
     }
-    
+    return;
 }
 

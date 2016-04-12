@@ -20,7 +20,7 @@ Rotate					KEYWORD 2
 
 # Constants (Literal 1)
 
-MotorFL					LITERAL 1
+MotorFL			is		LITERAL 1
 MotorFR					LITERAL 1
 MotorBL					LITERAL 1
 MotorBR					LITERAL 1
