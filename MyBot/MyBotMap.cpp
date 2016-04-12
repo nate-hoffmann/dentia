@@ -12,7 +12,7 @@
 
 int* MyBotMap::WhatLocation(int Location)
 {
-    int LRF[3];
+    int* LRF[3];
     switch(Location)
     {
         case PrimaryRight:
@@ -209,15 +209,19 @@ void MyBotMap::GoToLocation(int Location)
                     if (x1>0)
                     {
                         //Speed Check
-                        if (x1<70)
+                        if (abs(x1)<70)
                         {
                             bottyMots.Slide(0,200);
-                            if (x1<60)
+                            if (abs(x1)<60)
                             {
                                 bottyMots.Slide(0,180);
-                                if (x1<40)
+                                if (abs(x1)<40)
                                 {
                                     bottyMots.Slide(0,160);
+                                    if (abs(x1)<ERROR)
+                                    {
+                                        bottyMots.Stop();
+                                    }
                                 }
                             }
                             
@@ -225,15 +229,19 @@ void MyBotMap::GoToLocation(int Location)
                     }
                     else
                     {
-                        if (x1<70)
+                        if (abs(x1)<70)
                         {
                             bottyMots.Slide(1,200);
-                            if (x1<60)
+                            if (abs(x1)<60)
                             {
                                 bottyMots.Slide(1,180);
-                                if (x1<40)
+                                if (abs(x1)<40)
                                 {
                                     bottyMots.Slide(1,160);
+                                    if (abs(x1)<ERROR)
+                                    {
+                                        bottyMots.Stop();
+                                    }
                                 }
                             }
                             
@@ -244,53 +252,18 @@ void MyBotMap::GoToLocation(int Location)
                 {
                     if (x2>0)
                     {
-                        if (x2<70)
+                        if (abs(x2)<70)
                         {
                             bottyMots.Slide(1,200);
-                            if (x2<60)
+                            if (abs(x2)<60)
                             {
                                 bottyMots.Slide(1,180);
-                                if (x2<40)
+                                if (abs(x2)<40)
                                 {
                                     bottyMots.Slide(1,160);
-                                }
-                            }
-                            
-                        }
-                    }
-                    else
-                    {
-                        if (x2<70)
-                        {
-                            bottyMots.Slide(0,200);
-                            if (x2<60)
-                            {
-                                bottyMots.Slide(0,180);
-                                if (x2<40)
-                                {
-                                    bottyMots.Slide(0,160);
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-                else
-                {
-                    if (x3>0)
-                    {
-                        if (x3<30)
-                        {
-                            bottyMots.Drive(1,200);
-                            if (x3<20)
-                            {
-                                bottyMots.Drive(1,180);
-                                if (x3<10)
-                                {
-                                    bottyMots.Drive(1,160);
-                                    if (x3<ERROR)
+                                    if (abs(x2)<ERROR)
                                     {
-                                        bottyMots.Drive(1,100);
+                                        bottyMots.Stop();
                                     }
                                 }
                             }
@@ -299,18 +272,61 @@ void MyBotMap::GoToLocation(int Location)
                     }
                     else
                     {
-                        if (x3<30)
+                        if (abs(x2)<70)
+                        {
+                            bottyMots.Slide(0,200);
+                            if (abs(x2)<60)
+                            {
+                                bottyMots.Slide(0,180);
+                                if (abs(x2)<40)
+                                {
+                                    bottyMots.Slide(0,160);
+                                    if (abs(x2)<ERROR)
+                                    {
+                                        bottyMots.Stop();
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    if (abs(x3)>0)
+                    {
+                        if (abs(x3)<30)
+                        {
+                            bottyMots.Drive(1,200);
+                            if (abs(x3)<20)
+                            {
+                                bottyMots.Drive(1,180);
+                                if (abs(x3)<10)
+                                {
+                                    bottyMots.Drive(1,160);
+                                    if (abs(x3)<ERROR)
+                                    {
+                                        bottyMots.Stop();
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        if (abs(x3)<30)
                         {
                             bottyMots.Drive(0,200);
-                            if (x3<20)
+                            if (abs(x3)<20)
                             {
                                 bottyMots.Drive(0,180);
-                                if (x3<10)
+                                if (abs(x3)<10)
                                 {
                                     bottyMots.Drive(0,160);
-                                    if (x3<ERROR)
+                                    if (abs(x3)<ERROR)
                                     {
-                                        bottyMots.Drive(1,100);
+                                        bottyMots.Stop();
                                     }
                                 }
                             }

@@ -22,23 +22,23 @@ void MyBotAction::DriveToLocation(int dir, int spee, int Location)
     NewPing sonarRight(TRIGGER_PIN_RIGHT, ECHO_PIN_RIGHT);
     NewPing sonarBack(TRIGGER_PIN_BACK, ECHO_PIN_BACK);
     NewPing sonarLeft(TRIGGER_PIN_LEFT, ECHO_PIN_LEFT);
-
+    
     uint8_t state = GO_FORWARD;
     int Check=1;
     int speed=spee;
     while(Check==1)
     {
-    uint8_t nextState = state;
-    speed = spee;
-    switch (state) {
-        case IDLE_STATE:
-            //   motors.stop();       // Stops both motors
-            bottyMots.Stop();
-            nextState = SENSOR_READ;
-            Serial.println("IDLE");
-   
-            break;
-        case SENSOR_READ:
+        uint8_t nextState = state;
+        speed = spee;
+        switch (state) {
+            case IDLE_STATE:
+                //   motors.stop();       // Stops both motors
+                bottyMots.Stop();
+                nextState = CHECK_FINAL;
+                Serial.println("IDLE");
+                
+                break;
+            case SENSOR_READ:
                 if( FrontSensorBar.getDensity() < 3 )
                 {
                     nextState = GO_FORWARD;
@@ -60,65 +60,46 @@ void MyBotAction::DriveToLocation(int dir, int spee, int Location)
                 {
                     nextState = CHECK_FINAL;
                 }
-            //Speed Change
-                if (sonarFront.ping()/US_ROUNDTRIP_CM<60)
+                if (sonarFront.ping()/US_ROUNDTRIP_CM<5)
                 {
-                    speed = 190;
-                    if (sonarFront.ping()/US_ROUNDTRIP_CM<50)
-                    {
-                        speed = 180;
-                        if (sonarFront.ping()/US_ROUNDTRIP_CM<40)
-                        {
-                            speed = 170;
-                            if (sonarFront.ping()/US_ROUNDTRIP_CM<30)
-                            {
-                                speed = 160;
-                                if (sonarFront.ping()/US_ROUNDTRIP_CM<30)
-                                {
-                                    speed = 150;
-                                    if (sonarFront.ping()/US_ROUNDTRIP_CM<20)
-                                    {
-                                        speed = 140;
-                                        if (sonarFront.ping()/US_ROUNDTRIP_CM<10)
-                                        {
-                                            speed = 100;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    bottyMots.Brake();
+                    nextState = CHECK_FINAL;
                 }
-            break;
-        case GO_FORWARD:
-
+                
+                break;
+            case GO_FORWARD:
+                
                 bottyMots.Drive(dir,200);
                 nextState = SENSOR_READ;
-
-            break;
-        case GO_LEFT:
-
+                
+                break;
+            case GO_LEFT:
+                
                 bottyMots.Slide(0,200);
                 nextState = SENSOR_READ;
-
-            break;
-        case GO_RIGHT:
-
+                
+                break;
+            case GO_RIGHT:
+                
                 bottyMots.Slide(1,200);
                 nextState = SENSOR_READ;
-
-            break;
-        case CHECK_FINAL:
-            bottyMots.Stop();
-            Check=bottyMap.CheckLocation(Location);
-            nextState=GO_FORWARD;
-            break;
-        default:
-            //   motors.stop();       // Stops both motors
-            bottyMots.Stop();
-            break;
-    }
-    state = nextState;
+                
+                break;
+            case CHECK_FINAL:
+                bottyMots.Stop();
+                Check=bottyMap.CheckLocation(Location);
+                if (Check == 1)
+                {
+                    bottyMap.GoToLocation(Location);
+                }
+                nextState=IDLE_STATE;
+                break;
+            default:
+                //   motors.stop();       // Stops both motors
+                bottyMots.Stop();
+                break;
+        }
+        state = nextState;
     }
     return;
     
@@ -138,7 +119,7 @@ void MyBotAction::Rotate(int dir, int Location)
     NewPing sonarBack(TRIGGER_PIN_BACK, ECHO_PIN_BACK);
     NewPing sonarLeft(TRIGGER_PIN_LEFT, ECHO_PIN_LEFT);
     
-
+    
     int Check = 1;
     uint8_t state = ROTATE;
     while (Check == 1)
@@ -148,11 +129,11 @@ void MyBotAction::Rotate(int dir, int Location)
         uint8_t nextState = state;
         switch (state) {
             case IDLE_STATE:
-
+                
                 bottyMots.Brake();
                 nextState = CHECK_FINAL;
                 break;
-
+                
             case ROTATE:
                 //   driveBot(200);
                 bottyMots.Pivot(dir,200);
