@@ -22,7 +22,7 @@ FrontSensorBar.begin();//Don't forget to call .begin() to get the bar ready.  Th
 BackSensorBar.begin();
 boolean Truth = true;
 Serial.println("Servo Attachment Test");
-for (int i = 1;i<30;i++)
+/*for (int i = 1;i<30;i++)
 {
 servo1.attach(i);
   if (servo1.attached()==Truth)
@@ -32,7 +32,7 @@ servo1.attach(i);
     int j=i;
     Serial.println(" is attached");
   }
-}
+}*/
 pinMode(MotorDriverInA1,OUTPUT);
 pinMode(MotorDriverInA2,OUTPUT);
 pinMode(MotorDriverPWM,OUTPUT);
@@ -40,13 +40,19 @@ pinMode(MotorDriverPWM,OUTPUT);
 
 void loop() {
   // put your main code here, to run repeatedly:
+  servo1.attach(9);
 Serial.println("Servo Test Begin");
-for (int i=544;i<1000;i++){
-  servo1.write(9);
+/*for (int i=544;i<1000;i++){
+  servo1.write(i);
   delay(10);
-}
+}*/
+servo1.write(90);
+delay(1000);
+servo1.write(40);
+delay(1000);
+servo1.write(0);
 Serial.println("Servo Test End");
-delay(3000);
+delay(1000);
 
 Serial.println("Output of sonar.ping/US_ROUNDTRIP_CM");
 int uS = sonarFront.ping();
@@ -63,7 +69,7 @@ Serial.println(uS / US_ROUNDTRIP_CM);
 uS = sonarBack.ping();
 Serial.print("Back: ");
 Serial.println(uS / US_ROUNDTRIP_CM);
-delay(3000);
+
 /*Serial.println("Outpt of Front Sensor Bar getRaw, getPosition, and getDensity");
 uint8_t x = FrontSensorBar.getRaw();
 int8_t y = FrontSensorBar.getPosition();
@@ -106,29 +112,31 @@ delay(1000);
 */
 
 delay(3000);
-digitalWrite(MotorDriverSTDBY,HIGH);
-Serial.println("MotorDriverTestBegin");
-Serial.println("A1=0 A2=1 PWM = 100");
+//digitalWrite(MotorDriverSTDBY,HIGH);
+//Serial.println("MotorDriverTestBegin");
+//Serial.println("A1=0 A2=1 PWM = 100");
 
 // CCW
 digitalWrite(MotorDriverInA1,LOW);
 digitalWrite(MotorDriverInA2,HIGH);
-analogWrite(MotorDriverPWM,100);
-delay(1000);
+analogWrite(MotorDriverPWM,150);
+delay(100);
 Serial.println("CCW: A1=1 A2=0 PWM = 100");
 
 //CW
 digitalWrite(MotorDriverInA1,HIGH);
 digitalWrite(MotorDriverInA2,LOW);
-analogWrite(MotorDriverPWM,100);
-delay(1000);
+analogWrite(MotorDriverPWM,255);
+delay(100);
 Serial.println("CW: A1=0 A2=1 PWM = 0");
 digitalWrite(MotorDriverInA1,LOW);
 digitalWrite(MotorDriverInA2,HIGH);
+analogWrite(MotorDriverPWM,255);
+delay(100);
 analogWrite(MotorDriverPWM,0);
-
 Serial.println("Test Complete");
-digitalWrite(MotorDriverSTDBY,LOW);
-delay(3000);
+
+
+
 
 }
