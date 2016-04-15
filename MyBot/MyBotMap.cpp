@@ -147,7 +147,7 @@ int MyBotMap::CheckLocation(int Location)
     
 }
 
-void MyBotMap::GoToLocation(int Location)
+int MyBotMap::GoToLocation(int Location)
 {
 /*
     NewPing sonarFront(TRIGGER_PIN_FRONT, ECHO_PIN_FRONT);
