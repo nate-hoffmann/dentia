@@ -340,4 +340,5 @@ int MyBotMap::GoToLocation(int Location)
         }
         
     }
+    return 0;
 }
