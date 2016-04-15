@@ -144,7 +144,7 @@ int MyBotMap::CheckLocation(int Location)
     
 }
 
-void MyBotMap::GoToLocation(int Location)
+int MyBotMap::GoToLocation(int Location)
 {
     //Initialize sensor ints
     int x1=0; int x2=0; int x3=0;
