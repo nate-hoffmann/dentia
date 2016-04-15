@@ -126,13 +126,13 @@ Serial.println("CCW: A1=1 A2=0 PWM = 100");
 //CW
 digitalWrite(MotorDriverInA1,HIGH);
 digitalWrite(MotorDriverInA2,LOW);
-analogWrite(MotorDriverPWM,255);
-delay(100);
+analogWrite(MotorDriverPWM,100);
+delay(400);
 Serial.println("CW: A1=0 A2=1 PWM = 0");
 digitalWrite(MotorDriverInA1,LOW);
 digitalWrite(MotorDriverInA2,HIGH);
-analogWrite(MotorDriverPWM,255);
-delay(100);
+analogWrite(MotorDriverPWM,100);
+delay(400);
 analogWrite(MotorDriverPWM,0);
 Serial.println("Test Complete");
 

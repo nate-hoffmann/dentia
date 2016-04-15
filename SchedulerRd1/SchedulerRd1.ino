@@ -16,7 +16,7 @@ FrontSensorBar.begin();//Don't forget to call .begin() to get the bar ready.  Th
 BackSensorBar.begin();
 //--------------------------------------------------------------------------------------------//
 // Beginning of the Competition
-
+/*
 //Action 1: Drive to Center Line
 bottyGo.DriveToLocation(1,200,CenterRight);
 
@@ -26,8 +26,13 @@ bottyGo.Rotate(1,CenterForward);
 //Action 3: 
 bottyGo.DriveToLocation(1,200,ScoringCenter);
 }
-
+*/
+bottyGo.ClawMove(0);
+delay(1000);
+Serial.println("CLAW MOVE (0)");
+bottyGo.ClawMove(1);
+Serial.println("CLAW MOVE (1)");
+}
 void loop() {
   // put your main code here, to run repeatedly:
-
 }
