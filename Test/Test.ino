@@ -43,16 +43,25 @@ pinMode(MotorDriverPWM,OUTPUT);
 servo1.attach(9);
 
 //Setup DC encoder
-  pinMode(EncoderA,INPUT);
-  pinMode(EncoderB,INPUT);
-  digitalWrite(MotorDriverInA1,LOW);
-  digitalWrite(MotorDriverInA2,HIGH);
+  pinMode(ClawEncoderA,INPUT);
+  pinMode(ClawEncoderB,INPUT);
+  digitalWrite(MotorDriverInA1,HIGH);
+  digitalWrite(MotorDriverInA2,LOW);
   attachInterrupt(digitalPinToInterrupt(ClawEncoderA),EncoderISR,CHANGE);
   attachInterrupt(digitalPinToInterrupt(ClawEncoderB),EncoderISR,CHANGE);
  
-  while (pulses < 50)
+  while (pulses < 3500)
   {
       analogWrite(MotorDriverPWM,255); 
+  }
+  analogWrite(MotorDriverPWM,0);
+  delay(1000);
+  pulses = 0;
+  digitalWrite(MotorDriverInA1,LOW);
+  digitalWrite(MotorDriverInA2,HIGH);
+  while (pulses <3500)
+  {
+    analogWrite(MotorDriverPWM,255);
   }
   analogWrite(MotorDriverPWM,0);
   

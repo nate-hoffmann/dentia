@@ -65,6 +65,12 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 
 #define ClawEncoderA            18
 #define ClawEncoderB            19
+#define MotorEncoderA           2
+#define MotorEncoderB           3
+
+#define ClawDim                 4200
+#define RotateDim90               2000
+#define RotateDim               2400
 
 //Sonar Sensor Coordinates
 
