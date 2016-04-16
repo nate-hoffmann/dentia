@@ -24,6 +24,7 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 
 #define MinSpeed 200 // Speed where all motors get 6V
 #define MaxSpeed 255
+#define SlideSpeed 50
 
 #define LineSensorFrontADD  0x3E
 #define LineSensorBackADD   0x3F
@@ -51,8 +52,8 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define SDA                 20
 #define SCL                 21
 
-#define TRIGGER_PIN_FRONT   39
-#define ECHO_PIN_FRONT      38
+#define TRIGGER_PIN_FRONT   30
+#define ECHO_PIN_FRONT      31
 
 #define TRIGGER_PIN_RIGHT   33
 #define ECHO_PIN_RIGHT      32
@@ -68,9 +69,12 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define MotorEncoderA           2
 #define MotorEncoderB           3
 
-#define ClawDim                 4200
-#define RotateDim90               2000
-#define RotateDim               2400
+#define ClawDim                 3500
+#define RotateDim90             2200
+#define RotateDim               2200
+#define FromSide                1400
+#define HitchAMT                120
+#define SecondarySideSlide      3500
 
 //Sonar Sensor Coordinates
 
@@ -159,6 +163,7 @@ class MyBotAction
     MyBotAction(); 
     void DriveToWall(); //Always forward
     void DriveToCenter(int dir);
+    void PegCenter();
 
 
     
