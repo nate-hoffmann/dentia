@@ -10,7 +10,7 @@ MyBotAction bottyGo;
 
 void setup() {
 // May need faster for the ultrasonic
-Serial.begin(9600);
+Serial.begin(115200);
 delay(5000);
 FrontSensorBar.begin();//Don't forget to call .begin() to get the bar ready.  This configures HW.
 BackSensorBar.begin();

@@ -71,7 +71,7 @@ uS = sonarBack.ping();
 Serial.print("Back: ");
 Serial.println(uS / US_ROUNDTRIP_CM);
 
-/*Serial.println("Outpt of Front Sensor Bar getRaw, getPosition, and getDensity");
+Serial.println("Outpt of Front Sensor Bar getRaw, getPosition, and getDensity");
 uint8_t x = FrontSensorBar.getRaw();
 int8_t y = FrontSensorBar.getPosition();
 Serial.println(x,BIN);
@@ -110,7 +110,7 @@ bottyMots.Drive(1,200);
 delay(1000);
 bottyMots.Brake();
 delay(1000);
-*/
+
 
 delay(3000);
 //digitalWrite(MotorDriverSTDBY,HIGH);
@@ -135,8 +135,8 @@ Serial.println("Test Complete");
 
 
 Serial.println("CCW: A1=1 A2=0 PWM = 100");
-digitalWrite(MotorDriverInA1,LOW);
-digitalWrite(MotorDriverInA2,HIGH);
+digitalWrite(MotorDriverInA1,HIGH);
+digitalWrite(MotorDriverInA2,LOW);
 Serial.println("Pulsing Test");
 delay(1000);
 Serial.println("delay(10)");
