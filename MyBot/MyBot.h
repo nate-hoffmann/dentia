@@ -156,10 +156,10 @@ class MyBotMotors
 class MyBotAction
 {
   public:
-    MyBotAction(); // Initialize all sensors needed for ops
-    void DriveToLocation(int dir, int spee,int Location); // 1 for FWD, 0 for BCKWD
-    void Orient(int dir, int Orientation); // amount is 1/4 turn, 1/2 turn, etc
-    void ClawMove(int dir); // 1 to Lower and Close, 0 to Raise and Open
+    MyBotAction(); 
+    void DriveToWall(); //Always forward
+    void DriveToCenter(int dir);
+
 
     
     /*void LineSlide(int dir, int spee); // 1 for right, 0 for left
