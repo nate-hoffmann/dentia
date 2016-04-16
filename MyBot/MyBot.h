@@ -11,13 +11,14 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #include "sensorbar.h"
 #include <AFMotor.h>
 #include <NewPing.h>
+#include <Servo.h>
 
 
 //#define all pin numbers, Motor Numbers, serial addresses
-#define MFL 1
-#define MFR 2
-#define MBL 3
-#define MBR 4
+#define MFL 3
+#define MFR 4
+#define MBL 2
+#define MBR 1
 
 #define MinSpeed 200 // Speed where all motors get 6V
 #define MaxSpeed 255
@@ -33,28 +34,32 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define ROTATE              5
 #define GO_BACKWARD         6
 #define CHECK_FINAL         7
+#define MANEUVER            8
+#define GO_UP               9
+#define GO_DOWN             10
 
 #define ERROR               10
+#define ERROR1              1
 
-#define MotorDriverInA1     42
-#define MotorDriverInA2     43
-#define MotorDriverPWM      44
-#define MotorDriverSTDBY    45
+#define MotorDriverInA1     43
+#define MotorDriverInA2     41
+#define MotorDriverPWM      45
+
 
 #define SDA                 20
 #define SCL                 21
 
-#define TRIGGER_PIN_FRONT   27
-#define ECHO_PIN_FRONT      26
+#define TRIGGER_PIN_FRONT   39
+#define ECHO_PIN_FRONT      38
 
-#define TRIGGER_PIN_RIGHT   53
-#define ECHO_PIN_RIGHT      52
+#define TRIGGER_PIN_RIGHT   33
+#define ECHO_PIN_RIGHT      32
 
-#define TRIGGER_PIN_BACK    23
-#define ECHO_PIN_BACK       22
+#define TRIGGER_PIN_BACK    37
+#define ECHO_PIN_BACK       36
 
-#define TRIGGER_PIN_LEFT    25
-#define ECHO_PIN_LEFT       24
+#define TRIGGER_PIN_LEFT    31
+#define ECHO_PIN_LEFT       30
 
 //Sonar Sensor Coordinates
 
@@ -105,6 +110,14 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define ScoringRight            11
 #define ScoringLeft             12
 
+//Orientations
+#define RIGHT                   50
+#define LEFT                    50
+#define FRONT                   45
+
+//Arm Locations
+#define UP                      10
+#define DOWN                    6
 
 
 class MyBotMotors
@@ -126,10 +139,11 @@ class MyBotAction
   public:
     MyBotAction(); // Initialize all sensors needed for ops
     void DriveToLocation(int dir, int spee,int Location); // 1 for FWD, 0 for BCKWD
-    void Rotate(int dir, int Location); // amount is 1/4 turn, 1/2 turn, etc
-/*    void ClampRelease(int Dir); // 1 to close, 0 to open
-    void ClawMove(int dir); // 1 for up, 0 for down
-    void LineSlide(int dir, int spee); // 1 for right, 0 for left
+    void Orient(int dir, int Orientation); // amount is 1/4 turn, 1/2 turn, etc
+    void ClawMove(int dir); // 1 to Lower and Close, 0 to Raise and Open
+
+    
+    /*void LineSlide(int dir, int spee); // 1 for right, 0 for left
     void NoLineSlide(int dir, int spee); // 1 for right, 0 for left
     void DriveToWall(int dir, int spee); // 1 for FWD, 0 for BCKWD
 */
@@ -140,7 +154,7 @@ class MyBotMap
 public:
     int* WhatLocation(int Location);
     int CheckLocation (int Location);
-    void GoToLocation (int Location);
+    int GoToLocation (int Location);
 };
 
 #endif

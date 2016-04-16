@@ -90,7 +90,7 @@ void MyBotAction::DriveToLocation(int dir, int spee, int Location)
                 Check=bottyMap.CheckLocation(Location);
                 if (Check == 1)
                 {
-                    bottyMap.GoToLocation(Location);
+                    Check=bottyMap.GoToLocation(Location);
                 }
                 nextState=IDLE_STATE;
                 break;
@@ -144,21 +144,21 @@ void MyBotAction::Orient(int dir, int Orientation)
             case CHECK_FINAL:
                 if (Orientation == RIGHT)
                 {
-                    if (abs(sonarFront.ping_median(10)/US_ROUNDTRIP_CM-RIGHT)<ERROR+5)
+                    if (abs(sonarFront.ping()/US_ROUNDTRIP_CM-RIGHT)<ERROR+5)//Do some analysis to get this number
                     {
                         Check=0;
                     }
                 }
                 if (Orientation == LEFT)
                 {
-                    if (abs(sonarFront.ping_median(10)/US_ROUNDTRIP_CM-LEFT)<ERROR+5)
+                    if (abs(sonarFront.ping()/US_ROUNDTRIP_CM-LEFT)<ERROR+5)
                     {
                         Check=0;
                     }
                 }
                 if (Orientation == FRONT)
                 {
-                    if (abs(sonarLeft.ping_median(10)/US_ROUNDTRIP_CM-FRONT)<ERROR+5)
+                    if (abs(sonarLeft.ping()/US_ROUNDTRIP_CM-FRONT)<ERROR+5)
                     {
                         Check=0;
                     }
@@ -173,5 +173,112 @@ void MyBotAction::Orient(int dir, int Orientation)
         state = nextState;
     }
     return;
+}
+
+void MyBotAction::ClawMove(int dir)
+{
+    //Initialize sonar for grabber
+    NewPing sonarBack(TRIGGER_PIN_BACK, ECHO_PIN_BACK);
+    //Initiate servo on pin 9
+    Servo servo1;
+    servo1.attach(9);
+    Serial.println("ClawMove");
+    
+    if (dir == 1) //Down and clamp
+    {
+        uint8_t state = GO_DOWN;
+        
+        //Moves the arm down to the correct heigh to 1cm accuracy using sonar
+        while (abs(sonarBack.ping()/US_ROUNDTRIP_CM-DOWN)>ERROR1)
+        {
+            uint8_t nextState = state;
+            switch(state)
+            {
+                case SENSOR_READ: //Reads the sonar distance and decides to move up or down
+                    //if closer to the bottom then supposed to be
+  //                  delay(50);
+                    if(sonarBack.ping()/US_ROUNDTRIP_CM>DOWN)
+                    {
+                        nextState = GO_UP;
+                        Serial.println("GO_UP");
+                    }
+                    else//Higher from the bottom than supposed to be
+                    {
+                        nextState = GO_DOWN;
+                        Serial.println("GO_DOWN");
+                    }
+                    
+                    break;
+                case GO_DOWN: //Moves down
+                    digitalWrite(MotorDriverInA1,LOW);
+                    digitalWrite(MotorDriverInA2,HIGH);
+                    analogWrite(MotorDriverPWM,255);
+                    delay(10);
+                    analogWrite(MotorDriverPWM,0);
+                    nextState = SENSOR_READ;
+                    Serial.println("WENT_DOWN");
+
+                    break;
+                case GO_UP: //Moves up
+                    digitalWrite(MotorDriverInA1,HIGH);
+                    digitalWrite(MotorDriverInA2,LOW);
+                    analogWrite(MotorDriverPWM,255);
+                    delay(10);
+                    analogWrite(MotorDriverPWM,0);
+                    nextState = SENSOR_READ;
+                    Serial.println("WENT_UP");
+
+                    break;
+            }
+            state=nextState;
+        }
+        
+        servo1.write(90);//Close Grabber
+    }
+    else
+    {
+    uint8_t state = GO_UP;
+    
+    while (abs(sonarBack.ping()/US_ROUNDTRIP_CM-UP)>ERROR1)
+    {
+        uint8_t nextState = state;
+        switch(state)
+        {
+            case SENSOR_READ:
+//                delay(50);
+                if(sonarBack.ping()/US_ROUNDTRIP_CM<UP)
+                {
+                    nextState = GO_UP;
+                }
+                else
+                {
+                    nextState = GO_DOWN;
+                }
+                break;
+            case GO_DOWN:
+                digitalWrite(MotorDriverInA1,LOW);
+                digitalWrite(MotorDriverInA2,HIGH);
+                analogWrite(MotorDriverPWM,255);
+                delay(10);
+                analogWrite(MotorDriverPWM,0);
+                nextState = SENSOR_READ;
+                Serial.println("WENT_DOWN");
+
+                break;
+            case GO_UP:
+                digitalWrite(MotorDriverInA1,HIGH);
+                digitalWrite(MotorDriverInA2,LOW);
+                analogWrite(MotorDriverPWM,255);
+                delay(10);
+                analogWrite(MotorDriverPWM,0);
+                nextState = SENSOR_READ;
+                Serial.println("WENT_UP");
+
+                break;
+        }
+        state=nextState;
+    }
+        servo1.write(0); // Open Grabber
+    }
 }
 

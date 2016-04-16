@@ -1,6 +1,6 @@
 //
 //  MyBotMap.cpp
-//
+//  
 //
 //  Created by Tyler White on 4/11/16.
 //
@@ -12,7 +12,7 @@
 
 int* MyBotMap::WhatLocation(int Location)
 {
-    int* LRF[3];
+    int LRF[3];
     switch(Location)
     {
         case PrimaryRight:
@@ -105,21 +105,21 @@ int MyBotMap::CheckLocation(int Location)
         //Check for any zero values
         if (LRF[0]>0)
         {
-            if(abs((sonarLeft.ping()/US_ROUNDTRIP_CM)-LRF[0])<ERROR)
+            if(abs((sonarLeft.ping()/US_ROUNDTRIP_CM)-LRF[0])<10)
             {
                 LeftCount++;
             }
         }
         if (LRF[1]>0)
         {
-            if(abs((sonarRight.ping()/US_ROUNDTRIP_CM)-LRF[1])<ERROR)
+            if(abs((sonarRight.ping()/US_ROUNDTRIP_CM)-LRF[1])<10)
             {
                 RightCount++;
             }
         }
         if (LRF[2]>0)
         {
-            if(abs((sonarFront.ping()/US_ROUNDTRIP_CM)-LRF[2])<ERROR)
+            if(abs((sonarFront.ping()/US_ROUNDTRIP_CM)-LRF[2])<10)
             {
                 FrontCount++;
             }
@@ -170,7 +170,7 @@ int MyBotMap::GoToLocation(int Location)
         switch (state)
         {
                 
-            case SENSOR_READ:
+        case SENSOR_READ:
                 //Check for any zero values and get coordinate difference from sensors of interest (non zero coordinates)
                 if (LRF[0]>0)
                 {
@@ -180,7 +180,7 @@ int MyBotMap::GoToLocation(int Location)
                 {
                     x1=0;
                 }
-                
+        
                 if (LRF[1]>0)
                 {
                     x2=sonarRight.ping_median(20)-LRF[1];
@@ -197,126 +197,126 @@ int MyBotMap::GoToLocation(int Location)
                 {
                     x3=0;
                 }
-                nextState=MANEUVER;
-                break;
-            case MANEUVER:
-                //Based on the difference make some maneuvers to bring the two values closer together.
-                
-                //Which is the furthest off of the sensors of interest?
-                if (abs(x1)>abs(x2)&&abs(x1)>abs(x3))
+        nextState=MANEUVER;
+        break;
+    case MANEUVER:
+        //Based on the difference make some maneuvers to bring the two values closer together.
+        
+        //Which is the furthest off of the sensors of interest?
+        if (abs(x1)>abs(x2)&&abs(x1)>abs(x3))
+        {
+            //Positive or Negative
+            if (x1>0)
+            {
+                //Speed Check
+
+                if (x1<60)
                 {
-                    //Positive or Negative
-                    if (x1>0)
-                    {
-                        //Speed Check
-                        
-                        if (abs(x1)<60)
-                        {
-                            bottyMots.Slide(0,180);
-                        }
-                        else if (abs(x1)<40)
-                        {
-                            bottyMots.Slide(0,160);
-                        }
-                        else
-                        {
-                            bottyMots.Slide(0,200);
-                        }
-                        
-                    }
-                    else
-                    {
-                        
-                        if (abs(x1)<60)
-                        {
-                            bottyMots.Slide(1,180);
-                        }
-                        else if (abs(x1)<40)
-                        {
-                            bottyMots.Slide(1,160);
-                        }
-                        else
-                        {
-                            bottyMots.Slide(1,200);
-                        }
-                    }
+                    bottyMots.Slide(0,180);
                 }
-                else if(abs(x2)>abs(x1)&&abs(x2)>abs(x3))
+                else if (x1<40)
                 {
-                    if (x2>0)
-                    {
-                        
-                        if (abs(x2)<60)
-                        {
-                            bottyMots.Slide(1,180);
-                        }
-                        else if (abs(x2)<40)
-                        {
-                            bottyMots.Slide(1,160);
-                        }
-                        else
-                        {
-                            bottyMots.Slide(1,200);
-                        }
-                        
-                    }
-                    else
-                    {
-                        if (abs(x2)<60)
-                        {
-                            bottyMots.Slide(0,180);
-                        }
-                        else if (abs(x2)<40)
-                        {
-                            bottyMots.Slide(0,160);
-                        }
-                        else
-                        {
-                            bottyMots.Slide(0,200);
-                        }
-                    }
+                    bottyMots.Slide(0,160);
                 }
                 else
                 {
-                    if (x3>0)
+                    bottyMots.Slide(0,200);
+                }
+                
+            }
+            else
+            {
+
+                if (x1<60)
+                {
+                    bottyMots.Slide(1,180);
+                }
+                else if (x1<40)
+                {
+                    bottyMots.Slide(1,160);
+                }
+                else
+                {
+                    bottyMots.Slide(1,200);
+                }
+            }
+        }
+        else if(abs(x2)>abs(x1)&&abs(x2)>abs(x3))
+        {
+            if (x2>0)
+            {
+
+                    if (x2<60)
                     {
-                        if (abs(x3)<30)
-                        {
-                            bottyMots.Drive(1,200);
-                        }
-                        else if (abs(x3)<20)
-                        {
-                            bottyMots.Drive(1,180);
-                        }
-                        else if (abs(x3)<10)
-                        {
-                            bottyMots.Drive(1,160);
-                        }
-                        else if(abs(x3)<ERROR)
-                        {
-                            bottyMots.Brake();
-                        }
+                        bottyMots.Slide(1,180);
+                    }
+                    else if (x2<40)
+                    {
+                        bottyMots.Slide(1,160);
                     }
                     else
                     {
-                        if (abs(x3)<30)
-                        {
-                            bottyMots.Drive(0,200);
-                        }
-                        else if (abs(x3)<20)
-                        {
-                            bottyMots.Drive(0,180);
-                        }
-                        else if (abs(x3)<10)
-                        {
-                            bottyMots.Drive(0,160);
-                        }
-                        else if(abs(x3)<ERROR)
-                        {
-                            bottyMots.Brake();
-                        }
+                    bottyMots.Slide(1,200);
                     }
+                    
+            }
+            else
+            {
+                if (x2<60)
+                {
+                    bottyMots.Slide(0,180);
                 }
+                else if (x2<40)
+                {
+                    bottyMots.Slide(0,160);
+                }
+                else
+                {
+                    bottyMots.Slide(0,200);
+                }
+            }
+        }
+        else
+        {
+            if (x3>0)
+            {
+                if (x3<30)
+                {
+                    bottyMots.Drive(1,200);
+                }
+                else if (x3<20)
+                {
+                    bottyMots.Drive(1,180);
+                }
+                else if (x3<10)
+                {
+                    bottyMots.Drive(1,160);
+                }
+                else if(x3<ERROR)
+                {
+                    bottyMots.Brake();
+                }
+            }
+            else
+            {
+                if (x3<30)
+                {
+                    bottyMots.Drive(0,200);
+                }
+                else if (x3<20)
+                {
+                    bottyMots.Drive(0,180);
+                }
+                else if (x3<10)
+                {
+                    bottyMots.Drive(0,160);
+                }
+                else if(x3<ERROR)
+                {
+                    bottyMots.Brake();
+                }
+            }
+        }
                 nextState = SENSOR_READ;
                 break;
                 
