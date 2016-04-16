@@ -29,30 +29,30 @@ pinMode(MotorDriverInA1,OUTPUT);
 pinMode(MotorDriverInA2,OUTPUT);
 pinMode(MotorDriverPWM,OUTPUT);
 servo1.attach(9);
-
+  attachInterrupt(digitalPinToInterrupt(ClawEncoderA),EncoderISR,CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ClawEncoderB),EncoderISR,CHANGE);
 //Setup DC encoder
   pinMode(ClawEncoderA,INPUT);
   pinMode(ClawEncoderB,INPUT);
-  digitalWrite(MotorDriverInA1,HIGH);
-  digitalWrite(MotorDriverInA2,LOW);
-  attachInterrupt(digitalPinToInterrupt(ClawEncoderA),EncoderISR,CHANGE);
-  attachInterrupt(digitalPinToInterrupt(ClawEncoderB),EncoderISR,CHANGE);
+  digitalWrite(MotorDriverInA1,LOW);
+  digitalWrite(MotorDriverInA2,HIGH);
+
  
-/*  while (pulses < ClawDim )
+  while (pulses < ClawDim )
   {
       analogWrite(MotorDriverPWM,255); 
   }
   analogWrite(MotorDriverPWM,0);
   delay(1000);
   pulses = 0;
-  digitalWrite(MotorDriverInA1,LOW);
-  digitalWrite(MotorDriverInA2,HIGH);
+  digitalWrite(MotorDriverInA1,HIGH);
+  digitalWrite(MotorDriverInA2,LOW);
   while (pulses < ClawDim)
   {
     analogWrite(MotorDriverPWM,255);
   }
   analogWrite(MotorDriverPWM,0);
-*/
+
 bottyMots.Stop();
 }
 
@@ -77,14 +77,14 @@ delay(1000);
     Serial.println(sonarFront.ping_median()/US_ROUNDTRIP_CM);
   }
 Serial.println("Outpt of Front Sensor Bar getPosition, and getDensity");
-*/
+
 int8_t y = FrontSensorBar.getPosition();
 Serial.print(y);
 uint8_t x=FrontSensorBar.getDensity();
 Serial.print("\t");
 Serial.println(x);
 delay(300);
-
+*/
 /*
 Serial.println("Driving routine to test MyBotMotor Class");
 bottyMots.Drive(1,200);

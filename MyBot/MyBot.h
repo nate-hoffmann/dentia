@@ -43,6 +43,7 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 
 #define ERROR               10
 #define ERROR1              1
+#define DELAY               400
 
 #define MotorDriverInA1     43
 #define MotorDriverInA2     41
@@ -69,12 +70,13 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define MotorEncoderA           2
 #define MotorEncoderB           3
 
-#define ClawDim                 3500
-#define RotateDim90             2200
-#define RotateDim               2200
-#define FromSide                1400
-#define HitchAMT                120
-#define SecondarySideSlide      3500
+#define ClawDimDown             4000
+#define ClawDimUp               4000
+#define RotateDim90             4800
+#define RotateDim               4800
+#define FromSide                2300
+#define HitchAMT                250
+#define SecondarySideSlide      6600
 
 //Sonar Sensor Coordinates
 

@@ -78,9 +78,9 @@ void MyBotAction::DriveToCenter(int dir)
                 case GO_FORWARD:
                     Serial.println("go forward (backwards)");
                     
-                    x1=sonarFront.ping()/US_ROUNDTRIP_CM;
+                    /*x1=sonarFront.ping()/US_ROUNDTRIP_CM;
                     Serial.println("X1:  " + x1);
-                    
+                    /*
                     if (x1<55 && x1!=0)
                     {
                         bottyMots.Drive(dir,140-2*x1);
@@ -101,7 +101,7 @@ void MyBotAction::DriveToCenter(int dir)
                 
                         bottyMots.Drive(dir,70);
                     }
-                    
+                    */
                     bottyMots.Drive(dir, 100);
                     if (FrontSensorBar.getDensity()>3 && sonarFront.ping()/US_ROUNDTRIP_CM>20)
                     {
@@ -279,14 +279,10 @@ while(Check == 0)
     switch (state) {
             Serial.println("in switch statement");
         case SENSOR_READ:
-            if (sonarFront.ping()/US_ROUNDTRIP_CM==5)
+            if (sonarFront.ping()/US_ROUNDTRIP_CM>5)
             {
                 bottyMots.Drive(1,100);
-                bottyMots.Stop();
-            }
-            else if (sonarFront.ping()/US_ROUNDTRIP_CM==3)
-            {
-                bottyMots.Drive(1,100);
+                delay(5);
                 bottyMots.Stop();
             }
             if( FrontSensorBar.getPosition() < -35 )
@@ -310,13 +306,13 @@ while(Check == 0)
             bottyMots.Slide(1,SlideSpeed);
             bottyMots.Stop();
             nextState = SENSOR_READ;
-            if (sonarFront.ping()/US_ROUNDTRIP_CM==5)
+            if (sonarFront.ping()/US_ROUNDTRIP_CM==6)
             {
                 bottyMots.Drive(1,100);
                 delay(10);
                 bottyMots.Stop();
             }
-            else if (sonarFront.ping()/US_ROUNDTRIP_CM==3)
+            else if (sonarFront.ping()/US_ROUNDTRIP_CM<3)
             {
                 bottyMots.Drive(1,100);
                 delay(10);
@@ -350,13 +346,7 @@ while(Check == 0)
             }
             break;
         case GO_FORWARD:
-            if (sonarFront.ping()/US_ROUNDTRIP_CM==5)
-            {
-                bottyMots.Drive(1,100);
-                delay(10);
-                bottyMots.Stop();
-            }
-            else if (sonarFront.ping()/US_ROUNDTRIP_CM==3)
+            if (sonarFront.ping()/US_ROUNDTRIP_CM>5)
             {
                 bottyMots.Drive(1,100);
                 delay(10);

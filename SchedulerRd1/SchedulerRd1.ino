@@ -25,7 +25,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ClawEncoderA),EncoderISR,CHANGE);
   attachInterrupt(digitalPinToInterrupt(ClawEncoderB),EncoderISR,CHANGE);
   attachInterrupt(digitalPinToInterrupt(MotorEncoderA),EncoderISR,CHANGE);
-    attachInterrupt(digitalPinToInterrupt(MotorEncoderA),EncoderISR,CHANGE);
+  attachInterrupt(digitalPinToInterrupt(MotorEncoderA),EncoderISR,CHANGE);
   // Initialize sensor bars
   FrontSensorBar.begin();//Don't forget to call .begin() to get the bar ready.  This configures HW.
   BackSensorBar.begin();
