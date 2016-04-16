@@ -147,7 +147,7 @@ int MyBotMap::CheckLocation(int Location)
 int MyBotMap::GoToLocation(int Location)
 {
     //Initialize sensor ints
-    int x1=0; int x2=0; int x3=0;
+    int x1=10; int x2=10; int x3=10;
     
     
     // Get coordinates from location
