@@ -1,163 +1,155 @@
 
 #include "MyBot.h"
 #include "Arduino.h"
-#include <AFMotor.h>
 
 
 
 MyBotMotors::MyBotMotors(void)
-{
-
-}
- 
+{}
 
 void MyBotMotors::Drive(int dir,int spee)
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
+    motorFL->setSpeed(spee);
+    motorFR->setSpeed(spee);
+    motorBL->setSpeed(spee);
+    motorBR->setSpeed(spee);
  
     // FWD for dir = 1, BCKWD for dir = 0
     // Potentiall include an if loop for if the input speed is too slow to give motor 6V
-    if (dir == 1){
-        
-    motorFL.run(FORWARD);
-    motorFR.run(FORWARD);
-    motorBL.run(FORWARD);
-    motorBR.run(FORWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
-    }
-    else
+    if (dir == 1) 
     {
-    motorFL.run(BACKWARD);
-    motorFR.run(BACKWARD);
-    motorBL.run(BACKWARD);
-    motorBR.run(BACKWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
+        motorFL->run(FORWARD);
+        motorFR->run(FORWARD);
+        motorBL->run(FORWARD);
+        motorBR->run(FORWARD);
+    } else 
+    {
+        motorFL->run(BACKWARD);
+        motorFR->run(BACKWARD);
+        motorBL->run(BACKWARD);
+        motorBR->run(BACKWARD);
     }
 }
 
 void MyBotMotors::Pivot(int dir,int spee)
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
+    motorFL->setSpeed(spee);
+    motorFR->setSpeed(spee);
+    motorBL->setSpeed(spee);
+    motorBR->setSpeed(spee);
+
     //CW for dir = 1, CCW for dir = 0
     if (dir == 1)
     {
-    motorFL.run(FORWARD);
-    motorFR.run(BACKWARD);
-    motorBL.run(FORWARD);
-    motorBR.run(BACKWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
-    }
-    else
+        motorFL->run(FORWARD);
+        motorFR->run(BACKWARD);
+        motorBL->run(FORWARD);
+        motorBR->run(BACKWARD);
+    } else
     {
-    motorFL.run(BACKWARD);
-    motorFR.run(FORWARD);
-    motorBL.run(BACKWARD);
-    motorBR.run(FORWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
+        motorFL->run(BACKWARD);
+        motorFR->run(FORWARD);
+        motorBL->run(BACKWARD);
+        motorBR->run(FORWARD);
     }
 }
 
 void MyBotMotors::Slide(int dir,int spee)
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
+    motorFL->setSpeed(spee);
+    motorFR->setSpeed(spee);
+    motorBL->setSpeed(spee);
+    motorBR->setSpeed(spee);
+
     //Right for dir = 1, Left for dir = 0
     if (dir == 1)
     {
-    motorFL.run(BACKWARD);
-    motorFR.run(FORWARD);
-    motorBL.run(FORWARD);
-    motorBR.run(BACKWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
+        motorFL->run(BACKWARD);
+        motorFR->run(FORWARD);
+        motorBL->run(FORWARD);
+        motorBR->run(BACKWARD);
     }
     else
     {
-    motorFL.run(FORWARD);
-    motorFR.run(BACKWARD);
-    motorBL.run(BACKWARD);
-    motorBR.run(FORWARD);
-    motorFL.setSpeed(spee);
-    motorFR.setSpeed(spee);
-    motorBL.setSpeed(spee);
-    motorBR.setSpeed(spee);
+        motorFL->run(FORWARD);
+        motorFR->run(BACKWARD);
+        motorBL->run(BACKWARD);
+        motorBR->run(FORWARD);
     }
 }
 
 void MyBotMotors::Turn(int dir)
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
     //Right for dir = 1, Left for dir = 0
     if (dir == 1)
     {
-        motorFL.run(FORWARD);
-        motorFR.run(FORWARD);
-        motorBL.run(FORWARD);
-        motorBR.run(FORWARD);
-        motorFL.setSpeed(MaxSpeed);
-        motorFR.setSpeed(MinSpeed);
-        motorBL.setSpeed(MaxSpeed);
-        motorBR.setSpeed(MinSpeed);
+        motorFL->run(FORWARD);
+        motorFR->run(FORWARD);
+        motorBL->run(FORWARD);
+        motorBR->run(FORWARD);
     }
     else
     {
-        motorFL.run(FORWARD);
-        motorFR.run(FORWARD);
-        motorBL.run(FORWARD);
-        motorBR.run(FORWARD);
-        motorFL.setSpeed(MinSpeed);
-        motorFR.setSpeed(MaxSpeed);
-        motorBL.setSpeed(MinSpeed);
-        motorBR.setSpeed(MaxSpeed);
+        motorFL->run(FORWARD);
+        motorFR->run(FORWARD);
+        motorBL->run(FORWARD);
+        motorBR->run(FORWARD);
     }
 }
 
 void MyBotMotors::Stop()
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
-    motorFL.run(RELEASE);
-    motorFR.run(RELEASE);
-    motorBL.run(RELEASE);
-    motorBR.run(RELEASE);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
+    motorFL->run(RELEASE);
+    motorFR->run(RELEASE);
+    motorBL->run(RELEASE);
+    motorBR->run(RELEASE);
 }
 
 void MyBotMotors::Brake()
 {
-    AF_DCMotor motorFL(MFL,MOTOR12_64KHZ);
-    AF_DCMotor motorFR(MFR,MOTOR12_64KHZ);
-    AF_DCMotor motorBL(MBL,MOTOR12_64KHZ);
-    AF_DCMotor motorBR(MBR,MOTOR12_64KHZ);
-    motorFL.run(BRAKE);
-    motorFR.run(BRAKE);
-    motorBL.run(BRAKE);
-    motorBR.run(BRAKE);
+    Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+    Adafruit_DCMotor *motorBR = AFMS.getMotor(1);
+    Adafruit_DCMotor *motorBL = AFMS.getMotor(2);
+    Adafruit_DCMotor *motorFL = AFMS.getMotor(3);
+    Adafruit_DCMotor *motorFR = AFMS.getMotor(4);
+
+    motorFL->run(BACKWARD);
+    motorFR->run(BACKWARD);
+    motorBL->run(BACKWARD);
+    motorBR->run(BACKWARD);
+    motorFL->run(RELEASE);
+    motorFR->run(RELEASE);
+    motorBL->run(RELEASE);
+    motorBR->run(RELEASE);
 }
 

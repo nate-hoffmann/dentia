@@ -9,7 +9,9 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 
 #include "Arduino.h"
 #include "sensorbar.h"
-#include <AFMotor.h>
+#include <Wire.h>
+#include <Adafruit_MotorShield.h>
+#include "Adafruit_PWMServoDriver.h"
 #include <NewPing.h>
 #include <Servo.h>
 
@@ -122,6 +124,12 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 
 class MyBotMotors
 {
+    Adafruit_MotorShield *AFMS;
+
+    Adafruit_DCMotor *motorBR;
+    Adafruit_DCMotor *motorBL;
+    Adafruit_DCMotor *motorFL;
+    Adafruit_DCMotor *motorFR;
 
   public:
     MyBotMotors(void); // Initializes the Motors for our config

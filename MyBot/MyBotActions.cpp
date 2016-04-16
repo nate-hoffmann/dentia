@@ -111,6 +111,7 @@ void MyBotAction::Orient(int dir, int Orientation)
     //Prepares bot class
     MyBotMap bottyMap;
     MyBotMotors bottyMots;
+
     //Prepare Line Sensor to be read
     SensorBar FrontSensorBar(LineSensorFrontADD);// Instantiate the motor control object. This only needs to be
     SensorBar BackSensorBar(LineSensorBackADD);

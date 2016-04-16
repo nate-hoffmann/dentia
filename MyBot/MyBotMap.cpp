@@ -10,14 +10,15 @@
 #include "Arduino.h"
 
 
-int* MyBotMap::WhatLocation(int Location)
+int *MyBotMap::WhatLocation(int Location)
 {
     int LRF[3];
+
     switch(Location)
     {
         case PrimaryRight:
-            LRF[0]=0;
-            LRF[1]=PrimaryRightPeg;
+            LRF[0] = 0;
+            LRF[1] = PrimaryRightPeg;
             LRF[2]=4;
             break;
         case PrimaryLeft:
@@ -83,7 +84,7 @@ int MyBotMap::CheckLocation(int Location)
 {
     MyBotMap bottyMap;
     //Get Coordinates of Locatio of interest
-    int* LRF = bottyMap.WhatLocation(Location);
+    int *LRF = bottyMap.WhatLocation(Location);
     //Initialize all Sonar Sensors
     NewPing sonarFront(TRIGGER_PIN_FRONT, ECHO_PIN_FRONT);
     NewPing sonarRight(TRIGGER_PIN_RIGHT, ECHO_PIN_RIGHT);
