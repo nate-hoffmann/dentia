@@ -63,6 +63,9 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 #define TRIGGER_PIN_LEFT    31
 #define ECHO_PIN_LEFT       30
 
+#define ClawEncoderA            18
+#define ClawEncoderB            19
+
 //Sonar Sensor Coordinates
 
 #define SecondaryRightPeg       60
@@ -120,6 +123,8 @@ This library is used to control a 4 mechanum wheel robot w/ a grabber
 //Arm Locations
 #define UP                      10
 #define DOWN                    6
+
+
 
 
 class MyBotMotors
